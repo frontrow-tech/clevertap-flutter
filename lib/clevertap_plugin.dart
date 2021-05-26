@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 typedef void CleverTapInAppNotificationDismissedHandler(
     Map<String, dynamic> mapList);
 typedef void CleverTapInAppNotificationButtonClickedHandler(
-    Map<String, String> mapList);
+    Map<String, dynamic> mapList);
 typedef void CleverTapProfileDidInitializeHandler();
 typedef void CleverTapProfileSyncHandler(Map<String, dynamic> map);
 typedef void CleverTapInboxDidInitializeHandler();
@@ -64,8 +64,9 @@ class CleverTapPlugin {
             args.cast<String, dynamic>());
         break;
       case "onInAppButtonClick":
-        Map<String, String> args = call.arguments;
-        cleverTapInAppNotificationButtonClickedHandler(args);
+        Map<dynamic, dynamic> args = call.arguments;
+        cleverTapInAppNotificationButtonClickedHandler(
+            args.cast<String, dynamic>());
         break;
       case "profileDidInitialize":
         cleverTapProfileDidInitializeHandler();
