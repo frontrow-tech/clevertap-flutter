@@ -1526,6 +1526,10 @@ public class CleverTapPlugin implements ActivityAware,
 
     private void invokeMethodOnUiThread(final String methodName, final String cleverTapID) {
         final MethodChannel channel = this.channel;
+        if (channel == null) {
+            Log.d(TAG, "methodChannel is null");
+            return;
+        }
         runOnMainThread(() -> {
             if (!cleverTapID.isEmpty()) {
                 channel.invokeMethod(methodName, cleverTapID);
