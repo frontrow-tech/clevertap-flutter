@@ -1521,7 +1521,17 @@ public class CleverTapPlugin implements ActivityAware,
     }
 
     private void runOnMainThread(final Runnable runnable) {
-        activity.runOnUiThread(runnable);
+        if (activity != null) {
+            activity.runOnUiThread(runnable);
+        } else {
+            try {
+                Handler mainHandler = new Handler(Looper.getMainLooper());
+                mainHandler.post(runnable);
+            } catch (Exception e) {
+                Log.e(TAG, "Exception while running on main thread - ");
+                e.printStackTrace();
+            }
+        }
     }
 
     private void invokeMethodOnUiThread(final String methodName, final String cleverTapID) {
